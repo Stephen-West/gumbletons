@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>Gumbleton marriage certificates</H1></CENTER> <BR clear=all> 
+
+{% if cert_list %}
+<p/>
+	<table border=1>
+	<tr><th>Date</th><th>Man</th><th>Woman</th><th>Place</th><th>Link to certificate details</th></tr>
+	{% for row in cert_list %}
+		<tr id = "{{row.id}}"><td >{{row.date|format_date}}</td>
+		<td>{% if row.man %}<a href=/people/{{row.man.PID}}.html>{{row.man_name}}</a>{%else%}{{row.man_name}}{%endif%}</td>
+		<td>{% if row.woman %}<a href=/people/{{row.woman.PID}}.html>{{row.woman_name}}</a>{%else%}{{row.woman_name}}{%endif%}</td>
+		<td>{{row.location}}: {{row.place_name}}</td>
+		<td><a href="/civilreg/mcert/{{row.id}}.html">Display details</a></td>
+	{% endfor %}
+	</table>
+<p/>
+{% endif %}
+
+{% endblock %}

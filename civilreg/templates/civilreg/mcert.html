@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load datefilters %}
+
+{% block content %}
+<CENTER><H1>Marriage certificate of {{cert_record.man_name}} and {{cert_record.woman_name}}</H1></CENTER> <BR clear=all> 
+
+<p/>
+{%autoescape off %}
+<center>
+	<table border=1 bgcolor=LimeGreen>
+	<tr><th colspan=2><big>Details recorded from Marriage Certicate</big></th></tr>
+	<tr><th align=left>Date</th><td>{{cert_record.date|format_date}}</td></tr>
+	<tr><th align=left>Place</th><td>{{cert_record.location}}</td></tr>
+	<tr><th align=left>Parish</th><td>{{cert_record.place_name}}</td></tr>
+	<tr><th align=left>County</th><td>{% if cert_record.county_id %}{{cert_record.county}}{% endif%}</td></tr>
+	<tr><th align=left>Man</th>
+	{%if cert_record.man%}<td><a href="/people/{{cert_record.man.PID}}.html">{{cert_record.man_name}}</a></td></tr>{%else%}
+		<td>{{cert_record.man_name}}</td></tr>{%endif%}
+	<tr><th align=left>Man's age</th><td>{{cert_record.man_age}}</td></tr>
+	<tr><th align=left>Man's condition</th><td>{{cert_record.man_condition}}</td></tr>
+	<tr><th align=left>Man's occupation</th><td>{{cert_record.man_occupation}}</td></tr>
+	<tr><th align=left>Man's residence</th><td>{{cert_record.man_residence}}</td></tr>
+	<tr><th align=left>Man's father</th>
+		{%if cert_record.man_father_id%}<td><a href="/people/{{cert_record.man_father.PID}}.html">{{cert_record.man_father_name}}</a></td></tr>
+		{%else%}<td>{{cert_record.man_father_name}}</td></tr>{%endif%}
+	<tr><th align=left>Man's father's occupation</th><td>{{cert_record.man_fathers_occupation}}</td></tr>
+	<tr><th align=left>Woman</th>
+		{%if cert_record.woman%}<td><a href="/people/{{cert_record.woman.PID}}.html">{{cert_record.woman_name}}</a></td></tr>{%else%}
+		<td>{{cert_record.woman_name}}</td></tr>{%endif%}
+	<tr><th align=left>Woman's age</th><td>{{cert_record.woman_age}}</td></tr>
+	<tr><th align=left>Woman's condition</th><td>{{cert_record.woman_condition}}</td></tr>
+	<tr><th align=left>Woman's occupation</th><td>{{cert_record.woman_occupation}}</td></tr>
+	<tr><th align=left>Woman's residence</th><td>{{cert_record.woman_residence}}</td></tr>
+	<tr><th align=left>Woman's father</th>
+		{%if cert_record.woman_father_id%}<td><a href="/people/{{cert_record.woman_father.PID}}.html">{{cert_record.woman_father_name}}</a></td></tr>
+		{%else%}<td>{{cert_record.woman_father_name}}</td></tr>{%endif%}	
+
+	<tr><th align=left>Woman's father's occupation</th><td>{{cert_record.woman_fathers_occupation}}</td></tr>
+	<tr><th align=left>Married at</th><td>{{cert_record.married_at}}</td></tr>
+	<tr><th align=left>Witnesses</th><td>{{cert_record.witness_names}}</td></tr>
+
+	<tr><th align=left>Margin notes</th><td>{{cert_record.margin_notes}}</td></tr>
+	</table>
+</center>
+<p/>
+Notes: {{cert_record.notes}}
+{% endautoescape %}
+
+<p/>
+
+
+{% endblock %}

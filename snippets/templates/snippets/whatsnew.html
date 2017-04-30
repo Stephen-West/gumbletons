@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+{%autoescape off %}
+<CENTER><H1>Latest news</H1></CENTER> <BR clear=all> 
+{% if compendium.rubric %}{{compendium.rubric}}{% endif %}
+<p>
+{% if s_list %}
+{% for row in s_list reversed%}
+<h2>{{row.title}}</h2>
+
+{{row.content}}
+{% endfor %}
+
+{% endif %}
+{% endautoescape %}
+{% endblock %}

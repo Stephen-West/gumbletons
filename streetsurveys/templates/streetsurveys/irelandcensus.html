@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+
+{% if c_record %}
+<CENTER><H1>{{c_record.name}}</H1></CENTER> <BR clear=all> 
+
+{% endif %}
+
+{% if households %}
+	{% for house in households %}
+<h2>{{house.title}}</h2> <i><small>{% if house.source_ref %}({{house.source_ref}}){%endif%}</small></i><br/>
+<table >
+{% for occupant in house.occupants %}
+<tr align="left" valign="top"><a id={{occupant.id}}></a>
+<td>{% if occupant.person_id %}<a href=/people/{{occupant.person.PID}}.html>{{occupant.name}}</a>{%else%}{{occupant.name}}{%endif%}</td>
+<td>{{occupant.relation}}</td>
+<td>{{occupant.age}}</td>
+<td>{{occupant.status}}</td>
+<td>{{occupant.occupation}}</td>
+<td>{{occupant.born}}</td>
+<td>{{occupant.religion}}</td>
+<td>{{occupant.education}}</td>
+<td>{{occupant.language}}</td></tr>
+{% endfor%}
+</table>
+	{% endfor %}
+{% endif %}
+
+
+{% endblock %}

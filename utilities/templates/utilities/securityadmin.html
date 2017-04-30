@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+{%autoescape off %}
+<CENTER><H1>Miscellaneous admin reports</H1></CENTER> <BR clear=all> 
+<h2>Multiple baptisms</h2>
+{% if multiple_baptisms %}
+<uL>
+{% for person in multiple_baptisms %}
+<li>{{person.name}} ({{person.PID}}): {{person.birth_date}}</li>
+{% endfor %}
+</ul>
+{% else %}None detected 
+{%endif%}
+<h2>Snippets marked private</h2>
+<p>
+{% if snippet_query %}
+<p/>
+	<table border=1>
+	<tr><th>Date</th><th>Person</th><th>Source</th><th>Title</th><th>Link to details</th></tr>
+	{% for row in snippet_query %}
+		<tr id = "{{row.id}}"><td >{{row.date|format_date}}</td>
+		{% if row.person_id %}
+        <td><a href="/people/{{row.person.PID}}.html">{%if row.name%}{{row.name}}
+            {%else%}{{row.person.names}} {{row.person.surname}}{%endif%}</a></td>
+        {% else %}
+            <td>{% if row.name %}{{row.name}} {% else %} {%endif%}</td>
+        {% endif %}
+		<td>{{row.source}}</td>
+		<td>{{row.title}}</td>
+		<td><a href="{{prefix}}{{row.id}}.html">Details</a></td>
+		</tr>
+	{% endfor %}
+	</table>
+<p/>
+{% else %}
+No private snippets found
+{% endif %}
+
+{% endautoescape %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>Death certificate of {{cert_record.names}} {{cert_record.surname}}</H1></CENTER> <BR clear=all> 
+
+<p/>
+{%autoescape off %}
+<center>
+	<table border=1 bgcolor=Gray>
+	<tr><th colspan=2><big>Details recorded from Death Certicate</big></th></tr>
+	<tr>
+	<th align=left>District</th><td>{{cert_record.district}}</td></tr>
+	<tr><th align=left>Subdistrict</th><td>{{cert_record.subdistrict}}</td></tr>
+	<tr><th align=left>Names</th>
+		{%if cert_record.person_id%}<td><a href="/people/{{cert_record.person.PID}}.html">{{cert_record.names}}</a></td></tr>{%else%}
+		<td>{{cert_record.names}}</td></tr>{%endif%}
+	<tr><th align=left>Surname</th><td>{{cert_record.surname}}</td></tr>
+	<tr><th align=left>When died</th><td>{{cert_record.date|format_date}}</td></tr>
+	<tr><th align=left>Where died</th><td>{{cert_record.where_died}}</td></tr>
+	<tr><th align=left>Sex</th><td>{{cert_record.sex}}</td></tr>
+	<tr><th align=left>Age</th><td>{{cert_record.age}}</td></tr>
+	<tr><th align=left>Occupation</th><td>{{cert_record.occupation}}</td></tr>
+	<tr><th align=left>Cause</th><td>{{cert_record.cause}}</td></tr>
+	<tr><th align=left>Informant</th><td>{{cert_record.informant}}</td></tr>
+	<tr><th align=left>Date registered</th><td>{{cert_record.date_registered|format_date}}</td></tr>
+	</table>
+</center>
+<i>{{cert_record.notes}}</i>
+{% endautoescape %}
+<p/>
+
+
+{% endblock %}

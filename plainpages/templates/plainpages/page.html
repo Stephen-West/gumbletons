@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% load staticfiles %}
+{% block content %}
+
+
+{% if pagedata%}
+{%autoescape off %}
+<center><h1>{{pagedata.name}}</h1></center>
+{{pagedata.content}}
+{%endautoescape %}
+
+{%endif%}
+
+{% endblock %}

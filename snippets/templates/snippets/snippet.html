@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>{{compendium.name}}: {{snippet.title}}</H1></CENTER> <BR clear=all> 
+
+<p/>
+
+{% if snippet.picture%}
+	<div style="float: right; padding-left:10px;">
+	<a href='/static/snippets/{{snippet.picture}}'><img src="/static/snippets/{{snippet.picture}}" align=right width=300px 
+	alt="{{snippet.title}}"/></a><br>
+	{%autoescape off %}{{snippet.caption}}{%endautoescape %}
+	</div>
+{%endif%}
+<div style="float: left width=70%;">
+{%autoescape off %}
+{{snippet.content}}
+
+<p>
+<i>{% if snippet.source %}{{snippet.source}}<br>{% endif %}
+{%if snippet.reference%}{{snippet.reference}}<br>{% endif %}
+{% if snippet.date %}{{snippet.date|format_date}} {% endif %}</i>
+{%if snippet.transcriber%}
+<p align=right><i>{{snippet.transcriber}}</i>
+{%endif%}
+
+<p/>
+{% if snippet.notes %}
+<table border=1>
+<tr><td><b>Notes:</b><br>{{ snippet.notes}}</td></tr>
+</table>
+{% endif %}
+{%if snippet.person or snippet.other_names.all %}
+<h3>People mentioned</h3>
+<ul>
+{% if snippet.person %}
+<li><a href="/people/{{snippet.person.PID}}.html">{{snippet.person.names}} {{snippet.person.surname}}</a></li>
+{%endif%}
+{% for person in snippet.other_names.all%}
+<li><a href="/people/{{person.PID}}.html">{{person.names}} {{person.surname}}</a></li>
+{%endfor%}
+</ul>
+{% endif%}
+{% endautoescape %}
+</div>
+<br clear=all>
+{% endblock %}

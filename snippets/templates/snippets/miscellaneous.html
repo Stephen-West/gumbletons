@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>{{group_name}}: {{t_record.title}}</H1></CENTER> <BR clear=all> 
+
+<p/>
+
+{% if t_record.picture%}
+	<div style="float: right; padding-left:10px;">
+	<a href=/media/images/{{t_record.picture}}><img src="/media/images/{{t_record.picture}}" align=right width=300px 
+	alt="{{t_record.title}}"/></a><br>
+	{%autoescape off %}{{t_record.caption}}{%endautoescape %}
+	</div>
+{%endif%}
+<div style="float: left width=70%;">
+{%autoescape off %}
+{{t_record.content}}
+
+<p>
+<i>{{t_record.source}}<br>
+{{t_record.date|format_date}}</i>
+{%if t_record.transcriber%}
+<p align=right><i>{{t_record.transcriber}}</i>
+{%endif%}
+
+<p/>
+{%if t_record.person or t_record.other_names.all %}
+<h3>People mentioned</h3>
+<ul>
+{% if t_record.person %}
+<li><a href="/people/{{t_record.person_id}}.html">{{t_record.person.names}} {{t_record.person.surname}}</a></li>
+{%endif%}
+{% for person in t_record.other_names.all%}
+<li><a href="/people/{{person.PID}}.html">{{person.names}} {{person.surname}}</a></li>
+{%endfor%}
+</ul>
+{% endif%}
+{% endautoescape %}
+</div>
+<br clear=all>
+{% endblock %}

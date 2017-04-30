@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+{%autoescape off %}
+<CENTER><H1>{{group_name}}</H1></CENTER> <BR clear=all> 
+{% if compendium.rubric %}{{compendium.rubric}}{% endif %}
+<p>
+{% if s_list %}
+<p/>
+	<table border=1>
+	<tr><th>Date</th><th>Person</th><th>Source</th><th>Title</th><th>Link to details</th></tr>
+	{% for row in s_list %}
+		<tr id = "{{row.id}}"><td >{{row.date|format_date}}</td>
+		{% if row.person_id %}
+        <td><a href="/people/{{row.person.PID}}.html">{%if row.name%}{{row.name}}
+            {%else%}{{row.person.names}} {{row.person.surname}}{%endif%}</a></td>
+        {% else %}
+            <td>{% if row.name %}{{row.name}} {% else %} {%endif%}</td>
+        {% endif %}
+		<td>{{row.source}}</td>
+		<td>{{row.title}}</td>
+		<td><a href="{{prefix}}{{row.id}}.html">Details</a></td>
+		</tr>
+	{% endfor %}
+	</table>
+<p/>
+{% endif %}
+{% endautoescape %}
+{% endblock %}

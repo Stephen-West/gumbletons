@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>{{place.town}}, {{place.county}}</H1></CENTER> <BR clear=all> 
+
+<p/>
+
+{% if place.plan%}
+	<div style="float: right; padding-left:10px;">
+	<a href='/static/places/{{place.plan}}'><img src="/static/places/{{place.plan}}" align=right width=300px 
+	alt="{{place.town}}"/></a><br>
+	{%autoescape off%}{{place.planCaption}}{%endautoescape %}
+	</div>
+{%endif%}
+<div style="float: left width=70%;">
+{%autoescape off %}
+{{place.description}}
+{% endautoescape %}
+</div>
+{% if place.picture%}
+    <center>
+	<a href='/static/places/{{place.picture}}'><img src="/static/places/{{place.picture}}" width=500px 
+	alt="{{place.town}}"/></a><br>
+	{%autoescape off%}{{place.caption}}{%endautoescape %}
+	</center>
+{%endif%}
+<br clear=all>
+{% if event_list %}
+<h3>Events associated with {{place.town}}, {{place.county}}</h3>
+<table border=1>
+<tr><th>Date</th><th>Event</th><th>Person</th><th>Reference</th></tr>
+{% for event in event_list %}
+<tr>
+<td>{{event.date|format_date}}</td>
+<td>{{event.event}}</td>
+<td>{% if event.person %}<a href='/people/{{event.person.PID}}.html'>{{event.person.name}}</a> {% endif %}</td>
+<td><a href={{event.path}}>{{event.link_text}}</a></td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+{% if place.see_also.all %}
+<h3>See also:</h3>
+<ul>
+{% for p in place.see_also.all %}
+<li><a href='/places/{{p.id}}.html'>{{p}}</a></li>
+{%endfor%}
+</ul>
+{% endif %}
+{% endblock %}

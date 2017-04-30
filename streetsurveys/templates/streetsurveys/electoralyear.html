@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>{{year}} Electoral rolls</H1></CENTER> <BR clear=all> 
+
+{% if year > '1917' and year < '1928' %}
+<table>
+<tr><th>R</th>	<td>Residence qualification</td></tr>
+<tr><th>BP</th>	<td>Business premises qualification</td></tr>
+<tr><th>O</th>	<td>Occupational qualification</td></tr>
+<tr><th>HO</th>	<td>Qualification through husband's occupation</td></tr>
+<tr><th>NM</th>	<td>Naval or military voter </td></tr>
+</table>
+{%endif%}
+{% if year > '1927' and year < '1945' %}
+<table>
+<tr><th align=left>R</th>	<td>Residence qualification (man)</td></tr>
+<tr><th align=left>Rw</th>	<td>Residence qualification (woman)</td></tr>
+<tr><th align=left>B</th>	<td>Business premises qualification (man)</td></tr>
+<tr><th align=left>Bw</th>	<td>Business premises qualification (woman)</td></tr>
+<tr><th align=left>O</th>	<td>Occupational qualification (man)</td></tr>
+<tr><th align=left>Ow</th>	<td>Occupational qualification (woman)</td></tr>
+<tr><th align=left>D</th>	<td>Qualification through wife's occupation</td></tr>
+<tr><th align=left>Dw</th>	<td>Qualification through husband's occupation</td></tr>
+<tr><th align=left>NM</th>	<td>Naval or military voter </td></tr>
+</table>
+{%endif%}
+<p/>
+{% if households_1 %}
+    {% if seasons = 2 %}<center><h2>Spring</h2></center>{%endif%}
+    {% for ho in households_1 %}
+        <h2>{{ho.address_name}}, {{ho.place_name}}</h2>
+        <table border=1>
+        <tr><th>Surname</th>
+        <th>Names</th>
+        <th>Local elections</th>
+        <th>Parliamentary elections</th>
+        <th>Qualifying property</th>
+        <th>Juror</th>
+        <th>Other</th></tr>
+        {% for occupant in ho.occupants%}
+            <tr id='{{occupant.id}}'><td>{{occupant.surname}}</td>
+            {%if occupant.person_id%}<td><a href=/people/{{occupant.person.PID}}.html>{{occupant.names}}</a></td>{%else%}<td>{{occupant.names}}</td>{%endif%}
+            <td>{{occupant.local_qual}}</td>
+            <td>{{occupant.national_qual}}</td>
+            <td>{{occupant.qual_property}}</td>
+            <td>{{occupant.juror}}</td>
+            <td>&nbsp;</td>
+            </tr>
+        {% endfor %}
+        </table>
+
+    {%endfor%}
+    {% endif %}
+
+    {% if households_2 %}
+        {% if seasons = 2 %}<center><h2>Autumn</h2></center>{%endif%}
+        {% for ho in households_2 %}
+            <h2>{{ho.address_name}}, {{ho.place_name}}</h2>
+            <table border=1>
+            <tr><th>Surname</th>
+            <th>Names</th>
+            <th>Local elections</th>
+            <th>Parliamentary elections</th>
+            <th>Qualifying property</th>
+            <th>Juror</th>
+            <th>Other</th></tr>
+            {% for occupant in ho.occupants%}
+                <tr><td>{{occupant.surname}}</td>
+            {%if occupant.person_id%}<td><a href=/people/{{occupant.person.PID}}.html>{{occupant.names}}</a></td>{%else%}<td>{{occupant.names}}</td>{%endif%}
+                <td>{{occupant.local_qual}}</td>
+                <td>{{occupant.national_qual}}</td>
+                <td>{{occupant.qual_property}}</td>
+                <td>{{occupant.juror}}</td>
+                <td>&nbsp;</td> 
+                </tr>
+            {% endfor %}
+            </table>
+
+        {%endfor%}
+        {% endif %}
+
+{% endblock %}

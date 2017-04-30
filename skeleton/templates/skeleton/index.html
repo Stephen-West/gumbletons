@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+{% if menu %}
+<CENTER><H1>{{menu.title}}</H1></CENTER> <BR clear=all> 
+
+{%autoescape off %}{{menu.rubric}}{%endautoescape %}
+{% endif %}
+
+{% if index_list %}
+
+<table>
+{% for row in index_list %}
+<tr>
+<td><a href="{{row.url}}">{{row.title}}</a></td>
+<td>{{row.Notes}}</td> 
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+{% endblock %}

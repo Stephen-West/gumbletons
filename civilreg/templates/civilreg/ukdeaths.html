@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>Gumbleton deaths recorded in UK civil registration</H1></CENTER> <BR clear=all> 
+
+In the UK, civil registration of deaths began in 1837. I have aimed to find all the Gumbletons recorded from then until 2006. 
+<p>
+The earliest indexes were compiled by quarter and included only the name, the registration district, and a reference to the actual page 
+of the full death entry. The full details of the death registration were only available by buying a death certificate. In 1866, the indexes began to include the age at death, and in 1966 changed this to  give the date of birth instead.<p>
+Before the online publication of these civil registration indexes, by several commercial companies and the FreeBMD project, it was necessary to search through the original index volumes, in person, at the General Register Office in London. This was a very time-consuming task and I was not always meticulous in recording the exact reference&mdash;and sometimes not even the quarter of the year&mdash;of the record. Hence the gaps in the index below. In time, I hope to add the missing information from online sources.
+
+{% if item_list %}
+<p/>
+	<table border=1>
+	<tr><th>Year</th><th>Qr</th><th>Name</th><th>Place</th><th>age</th>
+        <th>Birth date</th><th>Reference</th><th>Cert</th></tr>
+	{% for row in item_list %}
+		<tr id = "{{row.id}}"><td >{{row.year}}</td>
+		<td>{{row.quarter}}</td>
+		{% if row.person_id %}
+			<td><a href=/people/{{row.person.PID}}.html>{{row.names}} {{row.surname}}</a></td>
+		{% else %}
+			<td>{{row.names}} {{row.surname}}</td>
+		
+		{% endif %}
+
+{% if row.place.detail %}
+		<td><a href='/places/{{row.place_id}}.html'>{{row.place}}</a></td>
+{% else %}
+		<td>{{row.place}}</td>
+{% endif %}
+		<td>{{row.age}}</td>
+		<td>{{row.birth_date|format_date}}</td>
+		<td>{{row.reference}}</td>
+		<td>{% if row.certificate.get.id%} 
+			<a href=/civilreg/dcert/{{row.certificate.get.id}}.html>Yes</a>
+		    {%else%}No{%endif%}</td></tr>
+	{% endfor %}
+	</table>
+<p/>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% load placefilters %}
+{% load privacy %}
+
+
+{% block content %}
+{% get_privacy as p_privacy %}
+{% if person_record %}
+<CENTER><H1>{{person_record.names}} {{person_record.surname}}</H1></CENTER> <BR clear=all> 
+<table cellpadding=5 border width=100%>
+<tr valign="top">
+	<th align="right">Name:</th>
+	<td>{{person_record.names}} {{person_record.surname}}&nbsp;</td>
+	<td>{{person_record.PID}}&nbsp;</td>
+	</tr>
+{% if person_record.birth_date %}
+<tr valign="top">
+	<th align="right">Born:</th>
+	<td>{{person_record.birth_date|format_date}}&nbsp;</td>
+	<td>{%if person_record.birth_place %}{{person_record.birth_place.id|linkPlace|safe}}{% else%}&nbsp;{% endif %}</td>
+	</tr>
+{% endif %}
+{% if person_record.baptism_date %}
+<tr valign="top">
+	<th align="right">Baptised:</th>
+	<td>{{person_record.baptism_date|format_date}}&nbsp;</td>
+	<td>{%if person_record.baptism_place %}{{person_record.baptism_place.id|linkPlace|safe}}{% else %}&nbsp;{% endif %}</td>
+	</tr>
+{% endif %}
+<tr valign="top">
+	<th align="right">Parents:</th>
+		<td >{%if person_record.father%}<a href=/people/{{person_record.father.PID}}.html>{{person_record.father_name}}</a>{%else%}{{person_record.father_name}}&nbsp;{%endif%}</td>
+		<td >{%if person_record.mother%}<a href=/people/{{person_record.mother.PID}}.html>{{person_record.mother_name}}</a>{%else%}{{person_record.mother_name}}&nbsp;{%endif%}</td>
+	</tr>
+{% if person_record.death_date %}
+<tr valign="top"><th align="right">Died:</th><td>{{person_record.death_date|format_date}}&nbsp;</td><td>{% if person_record.death_place %}{{person_record.death_place.id|linkPlace|safe}}{% else %}&nbsp;{%endif%}</td></tr>
+{% endif %}
+{%if person_record.burial_date%}
+<tr valign="top"><th align="right">Buried:</th>
+<td>{{person_record.burial_date|format_date}}&nbsp;</td>
+<td>{% if person_record.burial_place %}{{person_record.burial_place.id|linkPlace|safe}}{% else %}&nbsp;{%endif%}</td>
+</tr>
+{%endif%}
+
+<tr><th align=right>Occupation:</th><td>{{person_record.occupation}}&nbsp;</td>
+<td align=center>{% if person_record.picture%}
+	<img src="/static/{{person_record.picture}}" width=200px alt="{{person_record.names}} {{person_record.surname}}"/><br>{%autoescape off %}{{person_record.caption}}{%endautoescape %}
+{%else%}&nbsp;</td>{%endif%}</tr>
+{% if p_privacy and recent%}
+<tr><td colspan=3>Note: Information about later generations may be excluded for reasons of privacy</td></tr>
+{% endif %}
+{% if spouse_list %}
+
+{% for s in spouse_list %}
+<tr><th>Spouse {{s.ordinal}}</th><td><a href='/people/{{s.pid}}.html'>{{s.name}}</a>
+{% if s.date %}
+    <br>{% if s.date == "Not" %}Not married
+    {% else %}Married {{s.date|format_date}} {% if s.place %}<br>{{s.place}}{% endif %}
+    {% endif %}
+{% endif %}
+{% if s.death_date %}<br>(Died {{s.death_date|format_date}}{% if s.death_place %} {{s.death_place}}{% endif %}){% endif %}</td>
+<td>
+{% if s.child_list %} 
+<table border='1'>
+{% for c in s.child_list %} 
+<tr><th>Child {{c.ordinal}}</th>
+<td>{{c.pid}}</td>
+<td><a href='/people/{{c.pid}}.html'>{{c.name}}</a></td>
+<td>{{c.birth_date|year}}</td></tr>
+{%endfor %} 
+
+</table>
+{% endif %} </td></tr>
+{%endfor %}
+
+{% endif %}
+
+<tr><td colspan=3>{%autoescape off %}{{person_record.biography}}&nbsp;{%endautoescape %}
+{% if person_record.credit %}<p><i>{{person_record.credit}}</i>{% endif %}</td></tr>
+
+</table>
+{% if event_list%}
+<table border = 1 width=100%>
+<tr><th>Date</th><th>Event</th><th>Place</th><th>Reference</th></tr>
+{% for event in event_list %}
+<tr>
+<td>{{event.date|format_date}}</td>
+<td>{{event.event}}</td>
+<td>{{event.place}}</td>
+<td><a href={{event.path}}>{{event.link_text}}</a></td>
+</tr>
+{% endfor %}
+</table>
+
+{%endif%}
+
+</center>
+{%endif%}
+{% endblock %}

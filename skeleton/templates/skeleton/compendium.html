@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<CENTER><H1>Index of records</H1></CENTER> <BR clear=all> 
+
+{% if c_list %}
+<p/>
+	<table border=1>
+		{% for row in c_list %}
+		<tr>
+		<!--<td>{{row.sequence}}</td>-->
+		<td ><a href={{row.prefix}}{{row.url}}>{{row.name}}</a></td>
+		<td>{{row.notes}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+<p/>
+{% endif %}
+
+{% endblock %}

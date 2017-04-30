@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>Birth certificate of {{cert_record.names}} {{cert_record.surname}}</H1></CENTER> <BR clear=all> 
+
+<p/>
+<center>
+	<table border=1 bgcolor='#FFADAA'>
+	<tr>
+	<th align=left>District</th><td>{{cert_record.place}}</td></tr>
+	<tr><th align=left>Subdistrict</th><td>{{cert_record.subdistrict_name}}</td></tr>
+	<tr><th align=left>Names</th>
+		{%if cert_record.person_id%}<td><a href="/people/{{cert_record.person.PID}}.html">{{cert_record.names}}</a></td></tr>{%else%}
+		<td>{{cert_record.names}}</td></tr>{%endif%}
+	<tr><th align=left>Surname</th><td>{{cert_record.surname}}</td></tr>
+	<tr><th align=left>When born</th><td>{{cert_record.born_date|format_date}}</td></tr>
+	<tr><th align=left>Where born</th><td>{{cert_record.address_name}}</td></tr>
+	<tr><th align=left>Sex</th><td>{{cert_record.sex}}</td></tr>
+	<tr><th align=left>Father</th>
+		{%if cert_record.father_id%}<td><a href="/people/{{cert_record.father.PID}}.html">{{cert_record.father_name}}</a></td></tr>
+		{%else%}<td>{{cert_record.father}}</td></tr>
+		{%endif%}
+	<tr><th align=left>Father's occupation</th><td>{{cert_record.father_occupation}}</td></tr>
+	<tr><th align=left>Mother</th>
+			{%if cert_record.mother_id%}<td><a href="/people/{{cert_record.mother.PID}}.html">{{cert_record.mother_name}}</a></td></tr>
+		{%else%}<td>{{cert_record.mother}}</td></tr>
+		{%endif%}
+	<tr><th align=left>Informant</th><td>{{cert_record.informant_name}}</td></tr>
+	<tr><th align=left>Date registered</th><td>{{cert_record.date|format_date}}</td></tr>
+	<tr><th align=left>Notes</th><td>{{cert_record.notes}}</td></tr>
+	<tr></table>
+</center>
+<p/>
+
+
+{% endblock %}

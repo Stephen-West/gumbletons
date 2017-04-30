@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<CENTER><H1>Gumbleton births recorded in UK civil registration</H1></CENTER>  
+
+In the UK, civil registration of births began in 1837. I have aimed to find all the Gumbletons recorded from then until 2006. 
+<p>
+The earliest indexes were compiled by quarter and included only the child's name, the registration district, and a reference to the actual page 
+of the full birth entry. The full details of the birth registration were only available by buying a birth certificate. At the end of 1911,
+the indexes began to include mothers' maiden names. Where names earlier than this are shown in square brackets below, they have been deduced, by me,
+from other sources but did not appear in the original indexes.<p>
+Before the online publication of these civil registration indexes, by several commercial companies and the FreeBMD project,
+it was necessary to search through the original index volumes, in person, at the General Register Office in London. This was
+a very time-consuming task and I was not always meticulous in recording the exact reference&mdash;and sometimes not even the
+quarter of the year&mdash;of the record. Hence the gaps in the index below. In time, I hope to add the missing information
+from online sources.
+<p/>
+{% if item_list %}
+	<table border='1'>
+	<tr><th>Year</th><th>Qr</th><th>Name</th><th>Place</th><th>Mother</th><th>Reference</th><th>Cert</th></tr>
+	{% for row in item_list %}
+		<tr id = "{{row.id}}"><td >{{row.year}}</td>
+		<td>{{row.quarter}}</td>
+        {% if row.person_id %}
+		<td><a href="/people/{{row.person.PID}}.html">{{row.names}} {{row.surname}}</a></td>
+        {% else%}
+        <td>{{row.names}} {{row.surname}}</td>
+        {% endif %}
+{% if row.place.detail %}
+		<td><a href='/places/{{row.place_id}}.html'>{{row.place}}</a></td>
+{% else %}
+		<td>{{row.place}}</td>
+{% endif %}
+		<td>{{row.mother_name}}</td>
+		<td>{{row.reference}}</td>
+		<td>{% if row.certificate.get.id%} 
+			<a href="/civilreg/bcert/{{row.certificate.get.id}}.html">Yes</a>
+		    {%else%}No{%endif%}</td></tr>
+	{% endfor %}
+	</table>
+<p/>
+{% endif %}
+
+{% endblock %}

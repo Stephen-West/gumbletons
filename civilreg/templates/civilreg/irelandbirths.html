@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<CENTER><H1>Gumbleton births recorded in Irish civil registration</H1></CENTER> <BR clear=all> 
+Civil registration of births began in Ireland in 1864.
+{% if item_list %}
+<p/>
+	<table border=1>
+	<tr><th>Year</th><th>Qr</th><th>Name</th><th>Place</th><th>Reference</th></tr>
+	{% for row in item_list %}
+		<tr id = "{{row.id}}"><td >{{row.year}}</td>
+		<td>{{row.quarter}}</td>
+		<td>{% if row.person %}<a href=/people/{{row.person.PID}}.html>{{row.names}} {{row.surname}}</a>{%else%}{{row.names}} {{row.surname}}{%endif%}</td>
+		<td>{{row.place}} </td>
+		<td>{{row.reference}}</tr>
+	{% endfor %}
+	</table>
+<p/>
+{% endif %}
+
+{% endblock %}

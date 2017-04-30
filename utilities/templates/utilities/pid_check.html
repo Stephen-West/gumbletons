@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+{%autoescape off %}
+<CENTER><H1>Spare ID numbers</H1></CENTER> <BR clear=all> 
+
+{% if id_list %}
+
+<p/>
+<ul>
+{% for key, value in id_list.items%}
+<li>{{key}} {{value}}</li>
+{%endfor%}
+</ul>
+<p/>
+{% else %}
+No private snippets found
+{% endif %}
+
+{% endautoescape %}
+{% endblock %}

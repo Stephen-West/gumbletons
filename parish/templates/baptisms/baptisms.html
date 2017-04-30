@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>Gumbleton baptisms</H1></CENTER> <BR clear=all> 
+
+{% if baptism_list %}
+<p/>
+	<table border=1>
+	<tr><th>Date</th><th>Name</th><th>Parents</th><th>Place</th><th>Source</th></tr>
+	{% for row in baptism_list %}
+		<tr id="{{row.id}}"><td >{{row.date|format_date}}</td>
+		<td>{%if row.person_id %}<a href=/people/{{row.person.PID}}.html>{{row.names}} {{row.surname}}</a>{%else%}{{row.names}} {{row.surname}}{%endif%}</td>
+		<td >{{row.parents}}</td>
+{% if row.place.detail %}
+		<td><a href='/places/{{row.place_id}}.html'>{{row.place}}</a></td>
+{% else %}
+		<td>{{row.place}}</td>
+{% endif %}
+		<td>{{row.source}}</td></tr>
+	{% endfor %}
+	</table>
+<p/>
+{% endif %}
+
+{% endblock %}

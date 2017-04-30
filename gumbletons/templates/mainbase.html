@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load privacy %}
+<html>
+<head>
+<style type="text/css">
+.bod {
+	padding: 0px;
+	border: 0px;
+	margin : 0px;
+	outline : 0;
+	}
+.bgnd {
+    background-image: url("/static/parch-dk.jpg");
+	padding: 0px;
+	border: 0px;
+	margin : 0px;
+	outline : 0;
+    }
+.main {
+    clear:both;
+    width:100%;
+	padding: 0px;
+	border: 0px;
+	margin : 0px;
+	outline : 0;
+}
+.menu {
+    background-image: url(/static/parch-dk.jpg);
+    float:left;
+    clear:left;
+    padding:10px;
+    width:18%;
+    border:0;
+    color: blue;   
+
+}
+.content {
+	border=0;
+    background-image: url(/static/parchmnt.jpg);
+    clear:right;
+    padding:10px;
+    overflow-x:auto;
+}
+</style>
+
+<meta charset="UTF-8">
+<title>{% block title %}Gumbleton Family History: Genealogy of the families of Gumbleton & Gomeldon{% endblock %}</title>
+<link rel="icon" href="/static/favicon.ico" type="image/png">
+</head>
+<body class="bodd">
+<div class="bgnd">
+<div class="menu">
+{% block menuitems %}
+<h5><a href="/index.html" >Gumbleton Family History</a></h5>
+<h5><a href="/early_gumbletons.html">Family origins</a></h5>
+<h5><a href="/census/index.html">Census records</a></h5>
+<h5><a href="/civilreg/index.html">Civil registration</a></h5>
+<h5><a href="/parish/index.html">Parish records</a></h5>
+<h5><a href="/occupations/index.html">Education and occupations</a></h5>
+<h5><a href="/willsandprobate/index.html">Wills, administrations and probate</a></h5>
+<h5><a href="/staterecords/index.html">Property, taxation and state papers</a></h5>
+<h5><a href="/miscellaneous/index.html">Miscellaneous records</a></h5>
+<h5><a href="/records_index.html" >Index of records</a></h5>
+<h5><a href="/peopleindexes/index.html" >Indexes of people</a></h5>
+<h5><a href="/general/index.html">Other information</a></h5>
+{% get_privacy as p_privacy %}
+{% if not p_privacy %}
+<h5><a href="/private/index.html">Private information</a></h5>
+{% endif %}
+{% if user.is_authenticated %}<h5>**Logged in**</h5><h5><a href="/logout/">Logout</a></h5>
+{% endif %}
+{% endblock %}
+
+</div>
+<div class="content">
+{% block content %}
+{% endblock %}
+
+<p>
+<hr>
+<ADDRESS> &copy; Steve West, {% now "Y" %}<P>
+This page generated {% now "j M Y, H:i" %}<p>
+<small>Disclaimer: the owner of this website assumes no responsibility or liability for any injury, 
+loss or damage incurred as a result of any use or reliance 
+upon the information and material contained within or downloaded from this website.
+I have taken considerable care in preparing information and materials which are displayed in 
+this website. However, I do not provide any warranty concerning the accuracy or completeness 
+of any information contained herein.</small>
+</ADDRESS>
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+</div>
+</div>
+</body>
+</html>
+
+

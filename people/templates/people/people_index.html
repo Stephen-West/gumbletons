@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>{{title}}</H1></CENTER> <BR clear=all> 
+
+{% if p_record %}
+<p/>
+	<table border=1>
+	<tr><th>ID</th><th>Surname</th><th>Forenames</th><th>Birth date</th><th>Birth place</th><th>Died</th></tr>
+	{% for row in p_record %}
+		<tr><td ><a href=/people/{{row.PID}}.html>{{row.PID}}</a></td>
+		<td>{{row.surname}}</td>
+		<td>{{row.names}}</td>
+		<td>{{ row.birth_date|format_date }}</td>
+		<td>{% if row.birth_place_id %}{{row.birth_place}}
+            {% elif row.baptism_place_id%}{{row.baptism_place}}{% endif %}</td>
+		<td>{{ row.death_date|format_date }}</td>
+	{% endfor %}
+	</table>
+<p/>
+{% endif %}
+
+{% endblock %}

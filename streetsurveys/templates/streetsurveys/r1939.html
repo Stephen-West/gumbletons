@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>1939 Index</H1></CENTER> <BR clear=all> 
+The 1939 register was a census of the UK population, taken in September 1939,  at the outbreak of World War II. It was used for the issuing of wartime identity cards, whose use was ended in 1952. Information from the register was also used in the founding of the National Health service. The online genealogy company findmypast.co.uk have digitised the records and made them available online, on a pay-per-view basis. I have looked for all the Gumbletons in the free index and done my best to reconstruct households, based on the index information, together with my own knowledge of Gumbleton families. 
+<p>
+The online Register only allows access to information about individuals born more than 100 years ago, or who are known to have died. Where I have listed 'Unidentified people (closed records)', these represent people who may still be living and whose records remain closed to the public.
+<p/>
+{% if households%}
+
+<ul>
+{% for house in households %}
+
+<h2>{{house.district}}</h2>
+<i>{{house.county}}</i><br>
+<b>{{house.surname}} household</b><br>
+<ul>
+{% for person in house.occupants %}
+{%if person.pid %}
+<li id='{{person.id}}'><a href='/people/{{person.pid}}.html'>{{person.names}} {{person.surname}}</a>, born {{person.birth_year}}</li>
+{%else%}
+<li>{{person.names}} {{person.surname}}, born {{person.birth_year}}</li>
+{%endif%}
+{% endfor %}
+<li>Unidentified people (open records): {{house.unnamed_open}}</li>
+<li>Unidentified people (closed records): {{house.unnamed_closed}}</li>
+</ul>
+{% endfor %}
+{% endif%}
+{% endblock %}

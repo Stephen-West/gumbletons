@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<CENTER><H1>Gumbleton marriages recorded in Australia civil registration</H1></CENTER> <BR clear=all> 
+
+
+{% if item_list %}
+<p/>
+	<table border=1>
+	<tr><th>Year</th><th>Qr</th><th>Name</th><th>Place</th><th>Spouse</th>
+        <th>Reference</th><th>Notes</th></tr>
+	{% for row in item_list %}
+		<tr id = "{{row.id}}"><td >{{row.year}}</td>
+		<td>{{row.quarter}}</td>
+		{% if row.person_id %}
+			<td><a href=/people/{{row.person.PID}}.html>{{row.names}} {{row.surname}}</a></td>
+		{% else %}
+			<td>{{row.names}} {{row.surname}}</td>
+		
+		{% endif %}
+
+		<td>{{row.place}} </td>
+		<td>{{row.spouse_name}}</td>
+
+		<td>{{row.reference}}</td>
+		<td>{{row.notes}}</td></tr>
+	{% endfor %}
+	</table>
+<p/>
+{% endif %}
+
+{% endblock %}

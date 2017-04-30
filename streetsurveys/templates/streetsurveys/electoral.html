@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load datefilters %}
+{% block content %}
+<CENTER><H1>Electoral rolls</H1></CENTER> <BR clear=all> 
+
+Electoral rolls of voters have been compiled yearly or half-yearly. Different categories of people 
+were eligible to vote at various times, so the rolls do not include everyone. Also the coverage on this 
+website is far from complete. The following is a list of years for which some Gumbletons  have been found:
+<p/>
+{% if years%}
+
+<ul>
+{% for yr in years %}
+<li><a href='{{yr}}.html'>{{yr}} Electoral rolls</a></li>
+{%endfor%}
+</ul>
+{% endif%}
+{% endblock %}
