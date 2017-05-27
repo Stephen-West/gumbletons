@@ -216,7 +216,7 @@ class GROmarriage(models.Model):
     person = models.ForeignKey('people.Person', null=True, blank=True)
     spouse_name = models.CharField(max_length=32, null=True, blank=True)
     spouse = models.ForeignKey('people.Person', null=True, blank=True, related_name='spouse')
-    source = models.CharField(max_length=15, null=True, blank=True)
+    source = models.CharField(max_length=32, null=True, blank=True)
     reference = models.CharField(max_length=15, null=True, blank=True)
     notes = models.CharField(max_length=255, null=True, blank=True)
     compendium = models.ForeignKey('skeleton.Compendium', null=True, blank=True)    

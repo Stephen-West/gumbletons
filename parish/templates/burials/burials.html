@@ -15,7 +15,7 @@
 {% else %}
 		<td>{{row.place}}</td>
 {% endif %}
-		<td>{{row.age}}</td>
+		<td>{%if row.age%}{{row.age}}{%endif%}</td>
 		<td>{{row.notes}}</td>
 		<td>{{row.source}}</td></tr>
 	{% endfor %}

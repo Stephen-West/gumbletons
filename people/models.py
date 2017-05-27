@@ -51,6 +51,8 @@ class Spouse(models.Model):
     place = models.ForeignKey('places.Place', null=True, blank=True, related_name='sp')
     place_code = models.CharField(max_length=10, null=True, blank=True)
     notes =  models.CharField(max_length=255, null=True, blank=True)
+    divorced = models.BooleanField(default=False)
+    divorce_date = models.CharField(max_length=20, null=True, blank=True)
     def __str__(self):
         return '{m} : {w} ({d})'.format(m=self.man, w=self.woman, d=self.date, )
     @property

@@ -6,6 +6,7 @@ from civilreg.models import GRObirth, BirthCertificate, GROdeath, GROmarriage, M
 from snippets.models import Snippet
 from parish.models import Burial, Baptism, Marriage
 from utilities.privacy_filters import sp_filter, sanitize, people_filter
+from utilities.urlfilters import preparse
 from datetime import datetime,date
 
 today = date.today()
@@ -18,6 +19,7 @@ complex_source_list = [BirthCertificate, Snippet, MarriageCertificate, Death_cer
 
 def show_person( request, pid):
     person_record = Person.objects.get(PID = pid)
+    person_record.biography = preparse(person_record.biography)
     id = person_record.id
 #If the father or mother don't have a name, get it from their people records
     if not person_record.father_name:
@@ -75,6 +77,7 @@ def show_person( request, pid):
                 
             spouse_list.append({'ordinal' : i+1, 'name' : name, 'pid' : s.woman.PID, 
                 'date' : s.date, 'place' : s.place, 'death_date' : death_date, 'death_place' : death_place,
+				'divorced' : s.divorced, 'divorce_date': s.divorce_date,
                 'child_list' : child_list})
 
     else:
@@ -91,6 +94,7 @@ def show_person( request, pid):
                 child_list.append(child)
             spouse_list.append({'ordinal' : i+1, 'name' : name, 'pid' : s.man.PID, 
                 'date' : s.date, 'place' : s.place, 'death_date' : death_date, 'death_place' : death_place,
+				'divorced' : s.divorced, 'divorce_date': s.divorce_date,
                 'child_list' : child_list})
 
         
@@ -112,7 +116,10 @@ def show_person( request, pid):
             event_list.extend(results)
     event_list =sorted(event_list, key=lambda tup: tup['sort_date'])
     #print ("Event list: ",event_list)
-    recent = True if person_record.birth_date > "1900-01-01" else False
+    recent = False
+    if person_record.birth_date:
+        if person_record.birth_date > "1900-01-01":
+            recent=True
     context = {'person_record': person_record, 'spouse_list' : spouse_list, 
             'event_list' : event_list, 'recent' : recent}
     return render(request, 'people/person.html', context)

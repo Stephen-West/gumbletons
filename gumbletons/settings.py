@@ -118,7 +118,7 @@ STATICFILES_DIRS = (
 
 # Custom settings
 
-PRIVACY =True
+PRIVACY =False
 
 
 

@@ -21,9 +21,9 @@
 {% else %}
         <td></td>
 {% endif %}
-		<td>{{row.age}}</td>
-		<td>{{row.witnesses}}</td>
-		<td>{{row.notes}}</td>
+		<td>{%if row.age%}{{row.age}}{%endif%}</td>
+		<td>{%if row.witnesses%}{{row.witnesses}}{%endif%}</td>
+		<td>{%if row.notes%}{{row.notes}}{%endif%}</td>
 		<td>{% if row.source%}{{row.source}}{% endif%}</td></tr>
 	{% endfor %}
 	</table>

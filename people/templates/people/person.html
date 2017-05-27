@@ -43,7 +43,7 @@
 </tr>
 {%endif%}
 
-<tr><th align=right>Occupation:</th><td>{{person_record.occupation}}&nbsp;</td>
+<tr><th align=right>Occupation:</th><td>{%if person_record.occupation%}{{person_record.occupation}}{%endif%}&nbsp;</td>
 <td align=center>{% if person_record.picture%}
 	<img src="/static/{{person_record.picture}}" width=200px alt="{{person_record.names}} {{person_record.surname}}"/><br>{%autoescape off %}{{person_record.caption}}{%endautoescape %}
 {%else%}&nbsp;</td>{%endif%}</tr>
@@ -59,6 +59,7 @@
     {% else %}Married {{s.date|format_date}} {% if s.place %}<br>{{s.place}}{% endif %}
     {% endif %}
 {% endif %}
+{% if s.divorced %}<br>Divorced {{s.divorce_date|format_date}}{%endif%}
 {% if s.death_date %}<br>(Died {{s.death_date|format_date}}{% if s.death_place %} {{s.death_place}}{% endif %}){% endif %}</td>
 <td>
 {% if s.child_list %} 
