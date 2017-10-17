@@ -68,7 +68,9 @@
 {% if not p_privacy %}
 <h5><a href="/private/index.html">Private information</a></h5>
 {% endif %}
-{% if user.is_authenticated %}<h5>**Logged in**</h5><h5><a href="/logout/">Logout</a></h5>
+{% if user.is_authenticated %}
+<h5><a href="/books/index.html">Book versions</a></h5>
+<h5>**Logged in**</h5><h5><a href="/logout/">Logout</a></h5>
 {% endif %}
 {% endblock %}
 

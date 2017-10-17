@@ -19,11 +19,12 @@ from skeleton.views import index, compendium
 from civilreg.views import civil_index,  certificates
 from parish.views import burial_list, baptism_list, marriage_list
 from streetsurveys.views import rolls_index, rolls_year , R1939index, census
-from people.views import show_person, people_index, gumbleton_index, nongumbleton_index, allpeople, public_people, private_people
+from people.views import show_person, people_index, gumbleton_index, nongumbleton_index, public_people, private_people
 from snippets.views import miscellaneous_index, miscellaneous_item
 from plainpages.views import renderpage
-from utilities.views import admin_check, record_book,index_book, census_book, pid_check
+from utilities.views import admin_check, record_book, census_book, pid_check
 from places.views import show_place
+from books.views import willsbook, occupationsbook, propertybook, censusbook, allpeople,index_book, bmd_book, misc_book
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -31,11 +32,21 @@ urlpatterns = [
     url(r'^experimental/recordbook.html$', record_book),
     url(r'^experimental/indexbook.html$', index_book),
     url(r'^experimental/censusbook.html$', census_book),
+    #url(r'^experimental/willsbook.html$', wills_book),
     url(r'^private/publicpeople.html$', public_people),
     url(r'^private/privatepeople.html$', private_people),
     url(r'^private/admin_check.html$', admin_check),
     url(r'^private/pid_check.html$', pid_check),
-#Level 0 pages
+
+# Books
+    url(r'^books/people_book(\w*).html$', allpeople),
+    url(r'^books/wills_book.html$', willsbook),
+    url(r'^books/occupations_book.html$', occupationsbook),
+    url(r'^books/property_book.html$', propertybook),
+    url(r'^books/census_book.html$', censusbook),
+    url(r'^books/index_book.html$', index_book),
+    url(r'^books/parish_book.html$', bmd_book),
+    url(r'^books/misc_book.html$', misc_book),
     url(r'^records_index.html$', compendium),
     url(r'^(\w+\.html$)', renderpage),
     url(r'^(general/project.html)$', renderpage),

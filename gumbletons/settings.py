@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'snippets',
     'plainpages',
     'parish',
+    'books',
 )
 
 MIDDLEWARE_CLASSES = (

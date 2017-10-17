@@ -7,18 +7,20 @@
 
 </head>
 <body>
-<CENTER><H1>Gumbleton One Name Study. Volume 4: People</H1></CENTER> <BR clear=all> 
+<CENTER><H1>Gumbleton One Name Study. <br>Volume {{which_book}}: People{% if which_book == '1' %} (Earlier) {% else%} (Later){% endif%}</H1></CENTER> <BR clear=all> 
 <h2>Introduction</h2>
-This is volume 4 of a set of volumes containing details of the Gumbleton one-name genealogical study carried out by Stephen West. Nearly all the Gumbleton one-name records are contained in a computer database from which the online gumbleton.com version is generated. These books are an attempt to make the same information available in paper form.<p>
+This is one of a set of volumes containing details of the Gumbleton one-name genealogical study carried out by Stephen West. Nearly all the Gumbleton one-name records are contained in a computer database from which the online gumbleton.com version is generated. These books are an attempt to make the same information available in paper form.
+<p>
 Please note that this is not intended to be a narrative book that can be read from cover to cover. Rather, it is a compendium of records of the Gumbleton family, collected from a wide range of sources and associated, wherever possible, with particular individuals. Wherever such individuals are identified, they have been given a 'code' consisting of a letter and four numbers (eg N0004). 
 <p>
-The present volume lists all the people in the database. The ordering is by their code numbers, so person P0001
-should come before P0002 and both will be before Q0001. There is also an alphabetical list of people, sorted by surname and forenames, at the end of this volume.
-<p>
-Each person has a list of events associated with their life. These can be cross-referenced to the other volumes which contain the specific records.
+The number of individuals in the database is too great to fit easily into a single volume and so they have been split into a pair (Volumes 1 and 2) which list all the people in the database. This volume includes people born {% if which_book == '1' %}up until about 1860{% else %} after about 1860{%endif%}.  The ordering is by their code numbers, so person P0001 should come before P0002 and both will be before Q0001. There is an alphabetical list of people, sorted by surname and forenames, {% if which_book == '2' %}at the end of this volume.{%else%} at the end of Volume 2.{% endif %}
+
+Each person has a list of events associated with their life. These can be cross-referenced to the other volumes which contain the specific records. 
+
+<h2>List of people</h2>
 {% for person_record in p_record %}
     {% with p=person_record.person %}
-<h2>{{p.names}} {{p.surname}} {{p.PID}}</h2>
+<h3>{{p.names}} {{p.surname}} {{p.PID}}</h3>
 <b>Name:</b>
     {{p.names}} {{p.surname}} ({{p.PID}})<br>
 {% if p.birth_date %}
@@ -85,19 +87,23 @@ Each person has a list of events associated with their life. These can be cross-
 
 {%endif%}
 {% endfor %}
-<h1>Alphabetical index by name</h1>
+{% if which_book == '2' %}
+<h2>Alphabetical index by name</h2>
 	<table border=1>
-	<tr><th>ID</th><th>Surname</th><th>Forenames</th><th>Birth date</th><th>Birth place</th><th>Died</th></tr>
+	<tr><th>Surname</th><th>Forenames</th><th>Birth date</th><th>Birth place</th><th>Died</th><th>Volume</th><th>ID</th></tr>
 	{% for row in people_sorted %}
-		<tr><td >{{row.PID}}</td>
+		<tr>
 		<td>{{row.surname}}</td>
 		<td>{{row.names}}</td>
 		<td>{{ row.birth_date|format_date }}</td>
 		<td>{% if row.birth_place_id %}{{row.birth_place}}
             {% elif row.baptism_place_id%}{{row.baptism_place}}{% endif %}</td>
 		<td>{{ row.death_date|format_date }}</td>
+		<td>{% if row.PID > 'Q0000' %}Vol. 2{% else %}Vol. 1{% endif %}</td>
+		<td >{{row.PID}}</td>
 	{% endfor %}
 	</table>
+{% endif %}
 </body>
 </html>
 {% endblock %}

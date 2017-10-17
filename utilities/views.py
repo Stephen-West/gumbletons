@@ -1,5 +1,7 @@
 from django.shortcuts import render
 import re
+from itertools import chain
+from utilities.urlfilters import heading_down
 
 # Create your views here.
 
@@ -11,6 +13,34 @@ from civilreg.models import GRObirth, GROdeath, GROmarriage, BirthCertificate, D
 from streetsurveys.models import Household, Census, household1939, individual
 from string import ascii_uppercase
 
+year_ranges= {
+	'A' : 'Pre 1400',
+	'B' : '1400-1439',
+	'C' : '1440-1469',
+	'D' : '1470-1499',
+	'E' : '1500-1529',
+	'F' : '1530-1559',
+	'G' : '1560-1589',
+	'H' : '1590-1619',
+	'I' : '1620-1649',
+	'J' : '1650-1679',
+	'K' : '1680-1709',
+	'L' : '1710-1739',
+	'M' : '1740-1769',
+	'N' : '1770-1799',
+	'O' : '1800-1829',
+	'P' : '1830-1859',
+	'Q' : '1860-1889',
+	'R' : '1890-1919',
+	'S' : '1920-1949',
+	'T' : '1950-1979',
+	'U' : '1980-2009',
+	'V' : '2010-2039',
+	'W' : '',
+	'X' : '',
+	'Y' : '',
+	'Z' : '',
+	}
 def admin_check(request):
     snippet_query = Snippet.objects.filter(private=True)
     baptisms = Baptism.objects.all()
@@ -26,7 +56,7 @@ def admin_check(request):
     return render(request, 'utilities/securityadmin.html', {'snippet_query' : snippet_query, 'multiple_baptisms' : people })
 
 def pid_check(request):
-    spare_ids={}
+    record_list = []
     for x in ascii_uppercase:
         people_query = Person.objects.filter(PID__startswith=x).order_by('PID')
         last_id=0
@@ -40,8 +70,10 @@ def pid_check(request):
             last_id=id
         if not next_id:
             next_id=last_id+2
-        spare_ids[x]=next_id
-    return render(request, 'utilities/pid_check.html', {'id_list' :spare_ids})
+        years = year_ranges[x]
+        record = {'letter' :x, 'next_id': next_id, 'years' :years}
+        record_list.append(record)
+    return render(request, 'utilities/pid_check.html', {  'record_list' : record_list})
     
 
 def civil_index(url):
@@ -103,6 +135,8 @@ def record_book(request):
         index_list.append(item)
     context = {'index_list': index_list}
     return render(request, 'utilities/book_template.html', context)
+
+
 
 class CensusHousehold:
     id = ""

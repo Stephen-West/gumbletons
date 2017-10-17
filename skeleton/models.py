@@ -18,6 +18,7 @@ class Compendium(models.Model):
     sort_date = models.CharField(max_length=15, null=True, blank=True)
     private = models.BooleanField(default=False)
     category = models.CharField(max_length=32, null=True, blank=True, help_text= "Distinguishes between db tables")
+    volume = models.CharField(max_length=8, null=True, blank=True, help_text= "Volume number only used for books")
     def __str__(self):
         return '{s}: {n}'.format(s=self.sequence, n=self.name)
     class Meta:

@@ -7,7 +7,7 @@ from django.db import models
 class Person(models.Model):
     PID = models.CharField(max_length=10, db_index=True, unique=True)
     names = models.CharField(max_length=50, default='Unknown')
-    surname = models.CharField(max_length=20, default='Unknown')
+    surname = models.CharField(max_length=32, default='Unknown')
     birth_date = models.CharField(max_length=20, null=True, blank=True)
     birth_place = models.ForeignKey('places.Place', null=True, blank=True, related_name='b1')
     baptism_date = models.CharField(max_length=20, null=True, blank=True)

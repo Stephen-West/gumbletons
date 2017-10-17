@@ -6,7 +6,7 @@ from civilreg.models import GRObirth, BirthCertificate, GROdeath, GROmarriage, M
 from snippets.models import Snippet
 from parish.models import Burial, Baptism, Marriage
 from utilities.privacy_filters import sp_filter, sanitize, people_filter
-from utilities.urlfilters import preparse
+from utilities.urlfilters import preparse, heading_down
 from datetime import datetime,date
 
 today = date.today()
@@ -130,7 +130,7 @@ def people_index(request):
 
 def private_people(request):
     #today=datetime.now().strftime('%Y-%m-%d')
-    p_record = people_filter(Person.objects.filter(birth_date__lt = century_date).filter(private=True))
+    p_record = people_filter(Person.objects.exclude(birth_date__isnull=True).filter(birth_date__lt = century_date).filter(private=True))
     return render(request, 'people/people_index.html', {'p_record' : p_record, 'title' : "Private people over 100", })
 
 def public_people(request):
@@ -234,16 +234,4 @@ def get_spouses(person_record):
                 'child_list' : child_list})
     return spouse_list
 
-def allpeople(request):
-    p_record = (Person.objects.filter(listed=True).order_by('PID'))
-    people_list=[]
-    for person in p_record:
-        #print (person)
-        p_dict = {}
-        p_dict['person'] = person
-        p_dict['spouse_list'] = get_spouses(person)
-        p_dict['event_list'] = get_events(person.id)
-        people_list.append(p_dict)
-    people_sorted = p_record.order_by('surname', 'names')
-    return render(request, 'people/allpeople2.html', {'p_record' : people_list, 
-        'people_sorted' : people_sorted})    
+

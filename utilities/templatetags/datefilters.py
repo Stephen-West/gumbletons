@@ -16,6 +16,12 @@ def format_date(date):
 	if date.startswith('?') or date.endswith('?'):
 		about = "ca. "
 		date= date.strip('?')
+	elif date.startswith('<'):
+		about = "Before "
+		date= date.strip('<')
+	elif date.startswith('>'):
+		about = "After "
+		date= date.strip('>')
 	try:
 		[year, month, day] = date.split('-')
 		date_string = year

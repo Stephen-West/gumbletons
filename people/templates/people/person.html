@@ -45,7 +45,7 @@
 
 <tr><th align=right>Occupation:</th><td>{%if person_record.occupation%}{{person_record.occupation}}{%endif%}&nbsp;</td>
 <td align=center>{% if person_record.picture%}
-	<img src="/static/{{person_record.picture}}" width=200px alt="{{person_record.names}} {{person_record.surname}}"/><br>{%autoescape off %}{{person_record.caption}}{%endautoescape %}
+	<img src="/static/{{person_record.picture}}" width=200px alt="{{person_record.names}} {{person_record.surname}}"/><br>{%autoescape off %}{%if person_record.caption%}{{person_record.caption}}{%endif%}{%endautoescape %}
 {%else%}&nbsp;</td>{%endif%}</tr>
 {% if p_privacy and recent%}
 <tr><td colspan=3>Note: Information about later generations may be excluded for reasons of privacy</td></tr>

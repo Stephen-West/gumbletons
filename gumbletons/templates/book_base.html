@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load privacy %}
+{% load datefilters %}
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Gumbleton Family History: Genealogy of the families of Gumbleton & Gomeldon</title>
+</head>
+<body>
+<CENTER><H1>Gumbleton Family History<br>
+Vol. {{compendium.volume}}: {% block title %}{%endblock%}</H1></CENTER> 
+<h2>Contents</h2>
+<ol>
+<li>Introduction</li>
+{% for item in record_list %}
+<li> {{item.compendium.name}}</li>
+{% endfor %}
+{%block index_item%}{%endblock%}
+</ol>
+
+<h2>1. Introduction</h2>
+This is volume {{compendium.volume}} of a set of volumes containing details of the Gumbleton one-name genealogical study carried out by Stephen West. When I began researching the Gumbleton family, most records were kept in handwritten notebooks. Soon after, I began copying some of the records into a computer database and, with the advent of the World Wide Web, making these available from a webserver. In the last ten years, my use of notebooks has declined and nearly all the Gumbleton one-name records are now contained in a computer database from which the online gumbleton.com version is generated. I am conscious that, for some years, there has been no permanent paper record of my Gumbleton research. These books are an attempt to address that problem and make the same information available in book form.
+<p>
+Please note that this is not intended to be a narrative book that can be read from cover to cover. Rather, it is a compendium of records of the Gumbleton family, collected from a wide range of sources and associated, wherever possible, with particular individuals. Wherever such individuals are identified, they have been given a 'code' consisting of a letter and four numbers (eg N0004). These codes can be cross-referenced in a separate volume which list all the individuals.
+<p>
+{% block intro_text %}{% endblock%} 
+<p>
+The books' contents have been generated directly from the computer software that also generates my online web pages. The resulting computer files have then been imported into a word processor and only very lightly edited by hand (just adding some pagination and a front cover).
+<p>
+The full set of volumes consists of:
+<table>
+<tr><td>Vol. 1</td><td>People (earlier years)</td></tr>
+<tr><td>Vol. 2</td><td>People (later years)</td></tr>
+<tr><td>Vol. 3</td><td>Wills and probate</td></tr>
+<tr><td>Vol. 4</td><td>Education and occupations</td></tr>
+<tr><td>Vol. 5</td><td>Property, tax, courts and state papers</td></tr>
+<tr><td>Vol. 6</td><td>Censuses</td></tr>
+<tr><td>Vol. 7</td><td>Civil registration</td></tr>
+<tr><td>Vol. 8</td><td>Parish records</td></tr>
+<tr><td>Vol. 9</td><td>Miscellaneous records</td></tr>
+</table>
+
+{% block contents %}
+{% endblock %}
+
+<hr>
+Stephen West<br>
+steve.m.west@btinternet.com<br>
+Version 1<br>
+{% now "jS M Y" %}
+
+</body>
+</html>
+
+
